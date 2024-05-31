@@ -66,6 +66,13 @@ const ExpenseDetails = () => {
     sendRequest: updateStatus,
   } = useHttp<ExpenseReport>(`${APIPath.EXPENSE_REPORT}/status/${id}`, RequestMethods.PUT);
 
+  const {
+    data: deleteData,
+    loading: deleteLoading,
+    error: deleteError,
+    sendRequest: deleteRequest,
+  } = useHttp<ExpenseReport>(`${APIPath.EXPENSE_REPORT}/delete/${id}`, RequestMethods.DELETE);
+
   useEffect(() => {
     if (!data) sendRequest();
     else employeeNameParser(data.employeeFirstName, data.employeeLastName);
@@ -135,6 +142,26 @@ const ExpenseDetails = () => {
       });
     }
   };
+
+  const onDelete = async (expenseId: string) => {
+    await deleteRequest({}, { id: expenseId });
+  };
+
+  useEffect(() => {
+    if (!deleteError) {
+      setSnackbar({
+        open: true,
+        message: 'Expense deleted successfully',
+        type: 'success',
+      });
+    } else if (deleteData) {
+      setSnackbar({
+        open: true,
+        message: 'Error deleting expense. Please, try again',
+        type: 'danger',
+      });
+    }
+  }, [deleteError, deleteData, setSnackbar]);
 
   if (notFound || notAuthorized) {
     return <Navigate to='/404' replace />;
@@ -224,8 +251,8 @@ const ExpenseDetails = () => {
             <Box>
               <p style={{ fontSize: '.9rem' }}>Status</p>
               {!urlVoucher &&
-                (employee?.role == SupportedRoles.ADMIN ||
-                  employee?.role == SupportedRoles.ACCOUNTING) ? (
+              (employee?.role == SupportedRoles.ADMIN ||
+                employee?.role == SupportedRoles.ACCOUNTING) ? (
                 <GenericDropdown
                   disabled={loadingStatus}
                   options={Object.values(ExpenseReportStatus)}
@@ -288,12 +315,12 @@ const ExpenseDetails = () => {
               </Button>
             )}
             {expenseStatus == ExpenseReportStatus.PAYED &&
-              !urlVoucher &&
-              (employee?.role == SupportedRoles.ADMIN ||
-                employee?.role == SupportedRoles.ACCOUNTING) ? (
+            !urlVoucher &&
+            (employee?.role == SupportedRoles.ADMIN ||
+              employee?.role == SupportedRoles.ACCOUNTING) ? (
               <form
                 className='flex flex-col sm:flex-row items-start gap-3'
-              // onSubmit={e => form.handleUpdate(e, id!, userConfirmation, setOpenModal)}
+                // onSubmit={e => form.handleUpdate(e, id!, userConfirmation, setOpenModal)}
               >
                 <div className='sm:flex gap-2'>
                   <LinkIcon sx={{ color: colors.gold, marginTop: '12px' }} />
