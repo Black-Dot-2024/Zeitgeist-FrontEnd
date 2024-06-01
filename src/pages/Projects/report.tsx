@@ -109,10 +109,10 @@ const ProjectReport: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reqReport.data]);
 
-  useEffect(() => { }, [handleSearch]);
+  useEffect(() => {}, [handleSearch]);
 
   useEffect(() => {
-    const handleStorageChange = (event) => {
+    const handleStorageChange = event => {
       if (event.key === 'projectStatus') {
         // Reload or fetch new data
         window.location.reload(); // or fetch new data logic here

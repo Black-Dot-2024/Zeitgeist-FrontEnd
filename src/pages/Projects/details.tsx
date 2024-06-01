@@ -439,7 +439,7 @@ const ProjectDetails = () => {
           Project Tasks
         </h1>
         <Link to={id ? `${RoutesPath.TASKS}/${id}/create` : RoutesPath.TASKS}>
-          <AddButton onClick={() => { }} />
+          <AddButton onClick={() => {}} />
         </Link>
       </section>
       <Card className='bg-white overflow-auto mb-4'>
