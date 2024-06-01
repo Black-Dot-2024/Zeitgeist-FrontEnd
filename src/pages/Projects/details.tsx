@@ -147,6 +147,7 @@ const ProjectDetails = () => {
       });
       setProjectStatus(newStatus);
       setState({ open: true, message: 'Status updated successfully.', type: 'success' });
+      localStorage.setItem('projectStatus', newStatus);
     } catch {
       setState({ open: true, message: 'Error updating status.', type: 'danger' });
     } finally {
@@ -438,7 +439,7 @@ const ProjectDetails = () => {
           Project Tasks
         </h1>
         <Link to={id ? `${RoutesPath.TASKS}/${id}/create` : RoutesPath.TASKS}>
-          <AddButton onClick={() => {}} />
+          <AddButton onClick={() => { }} />
         </Link>
       </section>
       <Card className='bg-white overflow-auto mb-4'>
