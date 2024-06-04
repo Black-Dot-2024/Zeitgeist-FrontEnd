@@ -147,6 +147,7 @@ const ProjectDetails = () => {
       });
       setProjectStatus(newStatus);
       setState({ open: true, message: 'Status updated successfully.', type: 'success' });
+      localStorage.setItem('projectStatus', newStatus);
     } catch {
       setState({ open: true, message: 'Error updating status.', type: 'danger' });
     } finally {
