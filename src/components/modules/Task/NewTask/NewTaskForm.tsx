@@ -135,7 +135,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({
                 if (e.nativeEvent.data == '-') return;
                 if (parseFloat(e.target.value) < 0 || parseFloat(e.target.value) > 1000) return;
                 if (isNaN(parseFloat(e.target.value))) e.target.value = '0';
-                e.target.value = String(Number(e.target.value))
+                e.target.value = String(Number(e.target.value));
                 form.handleChange('workedHours', e.target.value);
               }}
             />
@@ -164,7 +164,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({
         </section>
         <section className='flex lg:mt-10 gap-4 justify-end'>
           <Link to={`/projects/details/${idProject}`} replace>
-            <CancelButton onClick={() => { }} />
+            <CancelButton onClick={() => {}} />
           </Link>
           <SendButton disabled={form.isPosting} onClick={() => form.handleSubmit(idProject)} />
         </section>
