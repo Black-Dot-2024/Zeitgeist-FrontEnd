@@ -213,7 +213,7 @@ const ExpenseDetails = () => {
           />
 
           <section className='flex justify-end flex-wrap-reverse md:flex-nowrap md:justify-between gap-4 py-6 items-start'>
-            <h1 className='truncate text-gray text-lg lg:text-[2rem] break-all whitespace-break-spaces'>
+            <h1 className='text-gray text-lg lg:text-[2rem] break-all whitespace-break-spaces'>
               {data.title}
             </h1>
             <div className='flex gap-2 md:gap-5 shrink-0'>
