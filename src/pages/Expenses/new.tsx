@@ -168,7 +168,7 @@ const ExpenseNew = () => {
               />
               {errors.title && <ExpenserError>{errors.title}</ExpenserError>}
             </section>
-            <section className='flex flex-grow flex-col w-full md:w-1/4'>
+            <section className='flex flex-grow flex-col w-full w-2/5'>
               <FormLabel>
                 Date <span className='text-red-600'>*</span>
               </FormLabel>
