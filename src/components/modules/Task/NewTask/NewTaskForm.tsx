@@ -134,8 +134,8 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({
                 if (e.nativeEvent.data == 'e') return;
                 if (e.nativeEvent.data == '-') return;
                 if (parseFloat(e.target.value) < 0 || parseFloat(e.target.value) > 1000) return;
-                if (isNaN(parseFloat(e.target.value))) e.target.value = '';
-
+                if (isNaN(parseFloat(e.target.value))) e.target.value = '0';
+                e.target.value = String(Number(e.target.value))
                 form.handleChange('workedHours', e.target.value);
               }}
             />
