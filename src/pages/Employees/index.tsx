@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import SearchBar from '../../components/common/SearchBar';
 import EmployeeTable from '../../components/modules/Employees/EmployeeeTable';
+import { EmployeeContext } from '../../hooks/employeeContext';
 
 const Employees = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterOption, setFilterOption] = useState('Name');
+  const { employee } = useContext(EmployeeContext);
+
+  if (employee?.role !== 'Admin') {
+    return <Navigate to='/home' replace />;
+  }
 
   return (
     <main className='min-h-full flex flex-col gap-2 overflow-hidden'>

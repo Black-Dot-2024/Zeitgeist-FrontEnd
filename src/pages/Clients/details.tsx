@@ -15,6 +15,7 @@ import colors from '../../colors';
 import ArchiveModal from '../../components/common/ArchiveModal';
 import DeleteModal from '../../components/common/DeleteModal';
 import GoBack from '../../components/common/GoBack';
+import Loader from '../../components/common/Loader';
 import ClientFormModal from '../../components/modules/Clients/ClientFormModal';
 import styles from '../../components/modules/Clients/details.module.css';
 import { EmployeeContext } from '../../hooks/employeeContext';
@@ -90,7 +91,7 @@ const ClientDetails = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (notFound) {
