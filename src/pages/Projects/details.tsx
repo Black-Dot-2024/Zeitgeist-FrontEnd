@@ -63,6 +63,7 @@ const ProjectDetails = () => {
   const { setState } = useContext(SnackbarContext);
   const [initialTasks, setInitialTasks] = useState<TaskDetail[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [companyName, setCompanyName] = useState<string>('');
   const [projectStatus, setProjectStatus] = useState<ProjectStatus>(ProjectStatus.NOT_STARTED);
   const [totalHours, setTotalHours] = useState<number>(0);
@@ -75,10 +76,6 @@ const ProjectDetails = () => {
     `${APIPath.PROJECT_DETAILS}/${id}`,
     RequestMethods.GET
   );
-
-  const toggleModal = () => {
-    setOpen(!open);
-  };
 
   /**
    * @description This useEffect is used to check if the error is an axios error and if the error
@@ -364,7 +361,7 @@ const ProjectDetails = () => {
 
               {data?.isArchived ? (
                 <Button
-                  onClick={toggleModal}
+                  onClick={() => setOpen(true)}
                   sx={{
                     backgroundColor: colors.lightWhite,
                     ':hover': {
@@ -381,7 +378,7 @@ const ProjectDetails = () => {
                 </Button>
               ) : (
                 <Button
-                  onClick={toggleModal}
+                  onClick={() => setOpen(true)}
                   sx={{
                     backgroundColor: colors.lightWhite,
                     ':hover': {
@@ -399,7 +396,7 @@ const ProjectDetails = () => {
               )}
               <Button
                 onClick={() => {
-                  setOpen(true);
+                  setOpenDeleteModal(true);
                 }}
                 sx={{
                   backgroundColor: colors.lightWhite,
@@ -413,8 +410,8 @@ const ProjectDetails = () => {
             </div>
           </section>
           <DeleteModal
-            open={open}
-            setOpen={setOpen}
+            open={openDeleteModal}
+            setOpen={setOpenDeleteModal}
             title='Delete project'
             description='Every task and hours associated with this project will be eliminated.'
             id={id ?? ''}
