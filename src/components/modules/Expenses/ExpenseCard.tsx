@@ -51,7 +51,7 @@ const ExpenseCard = ({
         {(employeeRole.toUpperCase() === SupportedRoles.ACCOUNTING.toUpperCase() ||
           employeeRole.toUpperCase() === SupportedRoles.ADMIN.toUpperCase()) && (
           <ColorChip
-            label={`${employeeFirstName} ${employeeLastName}`}
+            label={`${employeeFirstName!.split(' ')[0]} ${employeeLastName!.split(' ')[0]}`}
             color={`${colors.lighterGray}`}
           ></ColorChip>
         )}

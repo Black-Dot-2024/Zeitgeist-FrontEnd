@@ -32,7 +32,11 @@ const ExpensesMain = () => {
   useEffect(() => {
     setFilteredExpenses(
       expenses.filter(expense => {
-        return (expense.employeeFirstName + ' ' + expense.employeeLastName)
+        return (
+          expense.employeeFirstName!.split(' ')[0] +
+          ' ' +
+          expense.employeeLastName!.split(' ')[0]
+        )
           .toLowerCase()
           .includes(searchTerm.toLowerCase());
       })
