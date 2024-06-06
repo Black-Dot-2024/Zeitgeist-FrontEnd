@@ -169,6 +169,7 @@ const ProjectDetails = () => {
       });
       setProjectStatus(newStatus);
       setState({ open: true, message: 'Status updated successfully.', type: 'success' });
+      localStorage.setItem('projectStatus', newStatus);
     } catch {
       setState({ open: true, message: 'Error updating status.', type: 'danger' });
     } finally {
@@ -321,9 +322,11 @@ const ProjectDetails = () => {
         sx={{ Maxwidth: '300px', padding: '20px', border: 'none' }}
       >
         <section className='font-montserrat'>
-          <section className='flex flex-wrap flex-row justify-between gap-y-2 items-center'>
-            <h3 className='text-4xl font-medium whitespace-break-spaces break-all'>{data?.name}</h3>
-            <div className='flex flex-wrap gap-3 justify-end items-center'>
+          <section className='flex flex-wrap flex-col-reverse lg:flex-row justify-between gap-y-2 items-center'>
+            <h3 className='text-2xl lg:text-3xl font-medium whitespace-break-spaces break-all'>
+              {data?.name}
+            </h3>
+            <div className='flex flex-wrap gap-3 mb-6 justify-end items-center'>
               <Button
                 component={Link}
                 to={`${RoutesPath.PROJECTS}/edit/${id}`}
@@ -541,7 +544,7 @@ const ProjectDetails = () => {
           </Link>
         </Box>
       </section>
-      <Card className='bg-white overflow-auto mb-4'>
+      <Card className='bg-white overflow-auto'>
         <TaskListTable
           errorTasks={errorTasks}
           loadingTasks={loadingTasks}

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Button from '@mui/joy/Button';
 import { getRedirectResult, signInWithRedirect } from 'firebase/auth';
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import googleImage from '../../assets/images/google-logo.webp';
 import { auth, provider } from '../../config/firebase.config';
@@ -15,6 +15,7 @@ const Auth: React.FC = () => {
   const navigate = useNavigate();
   const { setEmployee } = useContext(EmployeeContext);
   const { setState } = useContext(SnackbarContext);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const currentEmployee = JSON.parse(localStorage.getItem('employee') ?? null);
   if (currentEmployee) {
@@ -75,10 +76,12 @@ const Auth: React.FC = () => {
   }, [sendRequest, setState, updateUserContext]);
 
   const handleGoogleSignIn = async () => {
+    setIsLoggingIn(true);
     try {
       await signInWithRedirect(auth, provider);
     } catch (error) {
       setState({ open: true, message: 'Oops! we are having some troubles', type: 'danger' });
+      setIsLoggingIn(false);
     }
   };
 
@@ -87,6 +90,7 @@ const Auth: React.FC = () => {
       <div className='flex justify-center sm:justify-end p-2 sm:pr-16 pt-10'>
         <Button
           onClick={handleGoogleSignIn}
+          disabled={isLoggingIn}
           sx={{
             backgroundColor: 'white',
             color: 'black',

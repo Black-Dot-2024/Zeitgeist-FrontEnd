@@ -245,11 +245,15 @@ const ClientDetails = () => {
             <section className={`flex flex-wrap mt-8 lg:grid grid-cols-2 ${styles.container}`}>
               <span className='w-full flex gap-3'>
                 <EmailOutlinedIcon />
-                <p className='whitespace-break-spaces text-sm md:text-md'>{company.email}</p>
+                <p className='whitespace-break-spaces break-all text-sm md:text-md'>
+                  {company.email}
+                </p>
               </span>
               <span className='w-full flex gap-3'>
                 <AbcOutlinedIcon />
-                <p className='whitespace-break-spaces text-sm md:text-md'>{company.rfc}</p>
+                <p className='whitespace-break-spaces break-all text-sm md:text-md'>
+                  {company.rfc}
+                </p>
               </span>
               <span className='w-full flex gap-3'>
                 <BusinessOutlinedIcon />

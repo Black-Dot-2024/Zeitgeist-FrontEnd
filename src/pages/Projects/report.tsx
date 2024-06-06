@@ -79,7 +79,7 @@ const ProjectReport: React.FC = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleClose = () => {
+  const handleSearch = () => {
     setUsingFilter(true);
     date.current = dayjs.utc(new Date(year, month - 1)).format('YYYY/MM/DD');
     const doFetch = async (): Promise<void> => {
@@ -109,7 +109,22 @@ const ProjectReport: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reqReport.data]);
 
-  useEffect(() => {}, [handleClose]);
+  useEffect(() => {}, [handleSearch]);
+
+  useEffect(() => {
+    const handleStorageChange = event => {
+      if (event.key === 'projectStatus') {
+        // Reload or fetch new data
+        window.location.reload(); // or fetch new data logic here
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   if (reqReport.loading) {
     return (
@@ -169,7 +184,7 @@ const ProjectReport: React.FC = () => {
         <section className='bg-white rounded-xl p-3 md:p-6 mb-5 overflow-y-scroll'>
           <section className='grid grid-cols-2 md:flex flex-wrap justify-end gap-3 mb-5'>
             <Select
-              defaultValue={1}
+              defaultValue={new Date().getUTCMonth()}
               placeholder='Month'
               indicator={<KeyboardArrowDown />}
               sx={{
@@ -214,7 +229,7 @@ const ProjectReport: React.FC = () => {
                   backgroundColor: colors.lighterGray,
                 },
               }}
-              onClick={handleClose}
+              onClick={handleSearch}
               disabled={hasErrors()}
               startDecorator={
                 <Search style={{ width: 24, color: validYear ? colors.null : colors.gold }} />
@@ -350,9 +365,12 @@ const ProjectReport: React.FC = () => {
               {report.statistics &&
                 Object.entries(report.statistics)
                   .filter(([key]) => key !== 'total')
-                  .map(([item, value]) => {
+                  .map(([item, value], index) => {
                     return (
-                      <div className='flex flex-col xl:grid xl:grid-cols-6 xl:items-center mx-6'>
+                      <div
+                        className='flex flex-col xl:grid xl:grid-cols-6 xl:items-center mx-6'
+                        key={index}
+                      >
                         <div className='xl:cols-span-1'>
                           <p>{keyMap.get(item)}</p>
                         </div>
@@ -405,8 +423,8 @@ const ProjectReport: React.FC = () => {
             )}
             {report.tasks?.map(item => {
               return (
-                <section>
-                  <Box key={item.id}>
+                <section key={item.id}>
+                  <Box>
                     <div className='mb-4'>
                       <h3 className='text-2xl font-semibold break-all whitespace-break-spaces'>
                         {item.title}

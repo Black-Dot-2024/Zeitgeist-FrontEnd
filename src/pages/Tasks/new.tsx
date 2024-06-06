@@ -88,6 +88,7 @@ const filterEmployees = (
 ): EmployeeEntity[] => {
   const isAdmin = currentUser.role === 'Admin';
   const hasDepartment = currentUser.department === 'Without Department';
+  const adminRole = import.meta.env.VITE_ADMIN_ROLE;
 
   if (hasDepartment) {
     return [];
@@ -95,7 +96,9 @@ const filterEmployees = (
 
   const filteredEmployees = isAdmin
     ? employees
-    : employees.filter(emp => emp.idDepartment === currentUser.employee.idDepartment);
+    : employees.filter(
+        emp => emp.idRole === adminRole || emp.idDepartment === currentUser.employee.idDepartment
+      );
 
   return filteredEmployees.sort((a, b) =>
     `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)

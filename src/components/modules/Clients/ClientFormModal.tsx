@@ -105,7 +105,7 @@ function ClientFormModal({ open, setOpen, data, id, updateFunction }: ClientForm
             value={form.formState.email}
             handleChange={form.handleChange}
             label={'Email'}
-            max={150}
+            max={70}
             sx={{ width: '100%' }}
           />
           <GenericInput

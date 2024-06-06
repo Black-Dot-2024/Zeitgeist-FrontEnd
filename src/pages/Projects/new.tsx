@@ -24,7 +24,7 @@ const NewProject = () => {
   const projectCategories = Object.values(ProjectCategory) as string[];
   const projectPeriodicity = Object.values(ProjectPeriodicity) as string[];
   const projectAreas = Object.values(ProjectAreas) as string[];
-  const req = useHttp<CompanyEntity[]>('/company', RequestMethods.GET);
+  const req = useHttp<CompanyEntity[]>('/company/unarchived', RequestMethods.GET);
   const [admin, setAdmin] = useState(false);
 
   useEffect(() => {

@@ -11,7 +11,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const isAuthenticated = localStorage.getItem('idToken');
   const { employee } = useContext(EmployeeContext);
 
-  if (!isAuthenticated || (employee && employee.role === 'No role')) {
+  if (!isAuthenticated || !employee || (employee && employee.role === 'No role')) {
     return <Navigate to='/' replace />;
   }
 

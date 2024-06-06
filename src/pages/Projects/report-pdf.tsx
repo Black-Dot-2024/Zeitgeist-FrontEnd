@@ -191,7 +191,13 @@ const ProjectReportPDF = (props: reportProps) => {
           tasks++;
           return (
             <View
-              style={{ color: 'black', textAlign: 'justify', margin: 30, gap: '30px' }}
+              style={{
+                color: 'black',
+                textAlign: 'justify',
+                margin: 30,
+                gap: '30px',
+                height: '25vh',
+              }}
               key={item.title}
             >
               <View style={{ gap: '10px' }}>
