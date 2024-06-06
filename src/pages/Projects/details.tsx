@@ -57,6 +57,7 @@ const ProjectDetails = () => {
   const { setState } = useContext(SnackbarContext);
   const [initialTasks, setInitialTasks] = useState<TaskDetail[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [companyName, setCompanyName] = useState<string>('');
   const [projectStatus, setProjectStatus] = useState<ProjectStatus>(ProjectStatus.NOT_STARTED);
   const [totalHours, setTotalHours] = useState<number>(0);
@@ -70,10 +71,10 @@ const ProjectDetails = () => {
     RequestMethods.GET
   );
 
-  const toggleModal = () => {
-    setOpen(!open);
-  };
-
+  /**
+   * @description This useEffect is used to check if the error is an axios error and if the error
+   * message contains 'Invalid uuid' or 'unexpected error'
+   * */
   useEffect(() => {
     if (isAxiosError(error)) {
       const message = error.response?.data.message;
@@ -326,7 +327,7 @@ const ProjectDetails = () => {
 
               {data?.isArchived ? (
                 <Button
-                  onClick={toggleModal}
+                  onClick={() => setOpen(true)}
                   sx={{
                     backgroundColor: colors.lightWhite,
                     ':hover': {
@@ -343,7 +344,7 @@ const ProjectDetails = () => {
                 </Button>
               ) : (
                 <Button
-                  onClick={toggleModal}
+                  onClick={() => setOpen(true)}
                   sx={{
                     backgroundColor: colors.lightWhite,
                     ':hover': {
@@ -359,8 +360,30 @@ const ProjectDetails = () => {
                   <Typography sx={{ color: colors.gold }}>Archive</Typography>
                 </Button>
               )}
+              <Button
+                onClick={() => {
+                  setOpenDeleteModal(true);
+                }}
+                sx={{
+                  backgroundColor: colors.lightWhite,
+                  ':hover': { backgroundColor: colors.orangeChip },
+                  height: '5px',
+                }}
+                startDecorator={<DeleteOutline sx={{ width: 24, color: colors.gold }} />}
+              >
+                <Typography sx={{ color: colors.gold }}>Delete</Typography>
+              </Button>
             </div>
           </section>
+          <DeleteModal
+            open={openDeleteModal}
+            setOpen={setOpenDeleteModal}
+            title='Delete project'
+            description='Every task and hours associated with this project will be eliminated.'
+            id={id ?? ''}
+            handleDelete={handleDeleteProject}
+            alertColor='danger'
+          />
 
           <p className='mt-4 whitespace-break-spaces break-all'>{data?.description}</p>
 
