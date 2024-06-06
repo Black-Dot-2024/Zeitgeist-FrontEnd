@@ -131,11 +131,12 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({
               type='number'
               value={form.formState.workedHours}
               onChange={e => {
-                if (e.target.value === '') {
-                  form.handleChange('workedHours', 0);
-                  return;
-                }
-                form.handleChange('workedHours', Number(e.target.value));
+                if (e.nativeEvent.data == 'e') return;
+                if (e.nativeEvent.data == '-') return;
+                if (parseFloat(e.target.value) < 0 || parseFloat(e.target.value) > 1000) return;
+                if (isNaN(parseFloat(e.target.value))) e.target.value = '';
+
+                form.handleChange('workedHours', e.target.value);
               }}
             />
             {form.errors.workedHours ? (
@@ -163,7 +164,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({
         </section>
         <section className='flex lg:mt-10 gap-4 justify-end'>
           <Link to={`/projects/details/${idProject}`} replace>
-            <CancelButton onClick={() => {}} />
+            <CancelButton onClick={() => { }} />
           </Link>
           <SendButton disabled={form.isPosting} onClick={() => form.handleSubmit(idProject)} />
         </section>
