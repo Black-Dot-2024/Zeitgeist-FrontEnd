@@ -76,10 +76,6 @@ function validate(formState: FormState) {
     errors.workedHours = 'Worked hours must be lower than or equal to 1000';
   }
 
-  if (!formState.workedHours && formState.workedHours !== 0) {
-    errors.workedHours = 'Worked hours must be a digit';
-  }
-
   if (!formState.startDate) {
     errors.startDate = 'Start date is required';
   }
@@ -154,7 +150,6 @@ export default function useTaskForm() {
 
     setIsPosting(true);
     try {
-      formState.workedHours = Number(formState.workedHours);
       const payload = { ...formState };
       for (const key in payload) {
         if (typeof payload[key as Fields] === 'string') {
