@@ -77,10 +77,6 @@ const ProjectDetails = () => {
     RequestMethods.GET
   );
 
-  const toggleModal = () => {
-    setOpen(!open);
-  };
-
   /**
    * @description This useEffect is used to check if the error is an axios error and if the error
    * message contains 'Invalid uuid' or 'unexpected error'
@@ -365,7 +361,7 @@ const ProjectDetails = () => {
 
               {data?.isArchived ? (
                 <Button
-                  onClick={toggleModal}
+                  onClick={() => setOpen(true)}
                   sx={{
                     backgroundColor: colors.lightWhite,
                     ':hover': {
@@ -382,7 +378,7 @@ const ProjectDetails = () => {
                 </Button>
               ) : (
                 <Button
-                  onClick={toggleModal}
+                  onClick={() => setOpen(true)}
                   sx={{
                     backgroundColor: colors.lightWhite,
                     ':hover': {
@@ -400,7 +396,7 @@ const ProjectDetails = () => {
               )}
               <Button
                 onClick={() => {
-                  setOpen(true);
+                  setOpenDeleteModal(true);
                 }}
                 sx={{
                   backgroundColor: colors.lightWhite,
