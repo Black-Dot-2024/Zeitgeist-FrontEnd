@@ -63,6 +63,7 @@ const ProjectDetails = () => {
   const { setState } = useContext(SnackbarContext);
   const [initialTasks, setInitialTasks] = useState<TaskDetail[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [companyName, setCompanyName] = useState<string>('');
   const [projectStatus, setProjectStatus] = useState<ProjectStatus>(ProjectStatus.NOT_STARTED);
   const [totalHours, setTotalHours] = useState<number>(0);
@@ -413,8 +414,8 @@ const ProjectDetails = () => {
             </div>
           </section>
           <DeleteModal
-            open={open}
-            setOpen={setOpen}
+            open={openDeleteModal}
+            setOpen={setOpenDeleteModal}
             title='Delete project'
             description='Every task and hours associated with this project will be eliminated.'
             id={id ?? ''}
@@ -540,7 +541,7 @@ const ProjectDetails = () => {
             </Button>
           )}
           <Link to={id ? `${RoutesPath.TASKS}/${id}/create` : RoutesPath.TASKS}>
-            <AddButton onClick={() => {}} />
+            <AddButton onClick={() => { }} />
           </Link>
         </Box>
       </section>
